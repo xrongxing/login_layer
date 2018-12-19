@@ -11,6 +11,23 @@
         <div class="alert alert-warning">{{ message }}</div>
       {% endif %}
         <h2 class="text-center">欢迎登录</h2>
+        {% for field in login_form %}
+          <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+          </div>
+        {% endfor %}
+
+        {% comment %}
+        <div class="form-group">
+          {{ login_form.username.label_tag }} {{ login_form.username }}
+        </div>
+        <div class="form-group">
+          {{ login_form.password.label_tag }} {{ login_form.password }}
+        </div>
+        {% endcomment %}
+
+        {% comment %}
         <div class="form-group">
           <label for="id_username">用户名: </label>
           <input class="form-control" type="text" id="id_username" name="username" placeholder="用户名" autofocus required / >
@@ -19,6 +36,7 @@
           <label for="id_password">密码: </label>
           <input class="form-control" type="password" id="id_password" name="password" placeholder="密码" required / >
         </div>
+        {% endcomment %}
         <button type="reset" class="btn btn-defalut pull-left">重置</button>
         <button type="submit" class="btn btn-primary pull-right">登录</button>
       </form>
