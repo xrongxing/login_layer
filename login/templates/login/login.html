@@ -13,6 +13,7 @@
         <h2 class="text-center">欢迎登录</h2>
         {% for field in login_form %}
           <div class="form-group">
+            {{ field.errors }}
             {{ field.label_tag }}
             {{ field }}
           </div>
@@ -24,6 +25,11 @@
         </div>
         <div class="form-group">
           {{ login_form.password.label_tag }} {{ login_form.password }}
+        </div>
+        <div>
+          {{ login_form.captcha.errors }}
+          {{ login_form.captcha.label_tag }}
+          {{ login_form.captcha }}
         </div>
         {% endcomment %}
 

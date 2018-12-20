@@ -15,7 +15,6 @@ def index(request):
 def login(request):
     if request.method == 'POST':
         login_form = forms.UserForm(request.POST)
-        message = '所有字段都必须填写'
         #username = request.POST.get('username', None)
         #password = request.POST.get('password', None)
         #print(username, password)
@@ -37,6 +36,8 @@ def login(request):
                     message = '密码错误'
             except:
                 message = '用户名不存在'
+        else:
+            message = '所有字段都必须填写正确'
         #context = {
         #    'message': message,
         #}
