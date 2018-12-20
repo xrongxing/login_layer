@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 
 from . import models
 from . import forms
-
+import hashlib
 # Create your views here.
 
 def index(request):
@@ -30,7 +30,8 @@ def login(request):
             password = login_form.cleaned_data['password']
             try:
                 user = models.User.objects.get(name=username)
-                if user.password == password:
+                #if user.password == password:
+                if user.password == hash_code(password):
                     #print('ok')
                     request.session['is_login'] = True
                     request.session['user_id'] = user.id
@@ -74,7 +75,8 @@ def register(request):
                     return render(request, 'login/register.html', locals())
                 new_user = models.User()
                 new_user.name = username
-                new_user.password = password1
+                #new_user.password = password1
+                new_user.password = hash_code(password1)
                 new_user.email = email
                 new_user.sex = sex
                 new_user.save()
@@ -98,3 +100,13 @@ def logout(request):
     #del request.session['user_id']
     #del request.session['user_name']
     return redirect('/index/')
+
+# 利用hashlib加密密码，并使密码加盐
+def hash_code(s, salt='login_layer'):
+    h = hashlib.sha256()
+    s += salt
+    # 与上等同
+    #s = s + salt
+    # update方法只接受bytes类型
+    h.update(s.encode())
+    return h.hexdigest()
