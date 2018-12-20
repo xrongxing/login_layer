@@ -1,7 +1,11 @@
 {% extends "login/base.html" %}
 {% block title %}首页{% endblock %}
 {% block content %}
-    <h2>欢迎</h2>
+    {% if request.session.is_login %}
+    <h2>你好,{{ request.session.user_name }}! 欢迎回来</h2>
+    {% else %}
+    <h2>未登陆用户，只能访问公开内容</h2>
+    {% endif %}
 {% endblock %}
 {% comment %}
 <!DOCTYPE html>

@@ -13,6 +13,8 @@ def index(request):
     return render(request, 'login/index.html')
 
 def login(request):
+    if request.session.get('is_login', None):
+        return redirect('/index/')
     if request.method == 'POST':
         login_form = forms.UserForm(request.POST)
         #username = request.POST.get('username', None)
@@ -30,6 +32,9 @@ def login(request):
                 user = models.User.objects.get(name=username)
                 if user.password == password:
                     #print('ok')
+                    request.session['is_login'] = True
+                    request.session['user_id'] = user.id
+                    request.session['user_name'] = user.name
                     return redirect('/index/')
                 else:
                     #print('no,the password: "%s"' % password)
@@ -50,5 +55,11 @@ def register(request):
     return render(request, 'login/register.html')
 
 def logout(request):
-    pass
+    if not request.session.get('is_login', None):
+        return redirect('/index/')
+    request.session.flush()
+    # 或者精确删除
+    #del request.session['is_login']
+    #del request.session['user_id']
+    #del request.session['user_name']
     return redirect('/index/')
