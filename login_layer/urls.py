@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^register/', login_views.register, name = 'register'),
     url(r'^logout/', login_views.logout, name = 'logout'),
     url(r'captcha/', include(captcha_urls)),
+    url(r'^confirm/$', login_views.user_confirm),
 ]

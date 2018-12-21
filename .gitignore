@@ -4,3 +4,4 @@ venv_login_layer
 __pycache__
 db.sqlite3
 .DS_Store
+private_files
